@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guess the Number Game</h1>
+    <p>Guess a number between 1 and 100:</p>
+
+    <input type="number" id="userGuess" placeholder="Enter your guess" min="1" max="100">
+    <button onclick="checkGuess()">Submit Guess</button>
+
+    <div id="message" class="message"></div>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById('userGuess').value);
+            const messageDiv = document.getElementById('message');
+            attempts++;
+
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                messageDiv.insertAdjacentHTML('beforeend', '<p>Please enter a valid number between 1 and 100!</p>');
+            } else if (userGuess === randomNumber) {
+                messageDiv.insertAdjacentHTML('beforeend', `<p>Congratulations! You guessed the number ${randomNumber} in ${attempts} attempts.</p>`);
+                resetGame();
+            } else if (userGuess < randomNumber) {
+                messageDiv.insertAdjacentHTML('beforeend', '<p>Too low! Try again.</p>');
+            } else if (userGuess > randomNumber) {
+                messageDiv.insertAdjacentHTML('beforeend', '<p>Too high! Try again.</p>');
+            }
+        }
+
+        function resetGame() {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+        }
+    </script>
+</body>
+</html>
